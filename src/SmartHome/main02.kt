@@ -1,37 +1,34 @@
-package SmartHome
+package smarthome
 
 
-// --- Función Principal para probar todo ---
+import smarthome.*
+
+
 fun main() {
-    // Creamos los dispositivos individuales
+    // 1. Creamos los dispositivos y la casa
     val smartTv = SmartTvDevice("Android TV", "Entertainment")
     val smartLight = SmartLightDevice("Google Light", "Utility")
-
-    // Creamos la casa inteligente con esos dispositivos
     val myHome = SmartHome(smartTv, smartLight)
 
-    // 1. Intentamos usar los dispositivos mientras están apagados
-    println("\n--- Intentando usar dispositivos apagados ---")
-    smartTv.decreaseVolume()
-    smartLight.decreaseBrightness()
-
-    // 2. Encendemos los dispositivos a través de SmartHome
-    println("\n--- Encendiendo dispositivos ---")
+    // 2. Encendemos los dispositivos a través de la casa
+    println("--- Encendiendo dispositivos ---")
     myHome.turnOnTv()
     myHome.turnOnLight()
     println("Total devices turned on: ${myHome.deviceTurnOnCount}")
 
-    // 3. Usamos los dispositivos ahora que están encendidos
-    println("\n--- Usando dispositivos encendidos ---")
-    smartTv.decreaseVolume()
-    smartLight.decreaseBrightness()
+    // 3. Usamos los métodos del "control remoto" de SmartHome
+    println("\n--- Usando los métodos de SmartHome ---")
+    myHome.decreaseTvVolume()
+    myHome.changeTvChannelToPrevious()
+    myHome.decreaseLightBrightness()
 
-    // 4. Apagamos un dispositivo
-    println("\n--- Apagando un dispositivo ---")
+    // 4. Mostramos la información a través de la casa
+    println("\n--- Mostrando información desde SmartHome ---")
+    myHome.printSmartTvInfo()
+    myHome.printSmartLightInfo()
+
+    // 5. Apagamos un dispositivo para ver el contador
+    println("\n--- Apagando TV ---")
     myHome.turnOffTv()
     println("Total devices turned on: ${myHome.deviceTurnOnCount}")
-
-    // 5. Imprimimos la información de un dispositivo
-    println("\n--- Mostrando información ---")
-    smartTv.printDeviceInfo()
 }

@@ -1,11 +1,10 @@
-package SmartHome
+package smarthome
 
-
-// --- Clase Base para todos los dispositivos ---
+// --- Clase Base (Sin cambios) ---
 open class SmartDevice(val name: String, val category: String) {
 
     var deviceStatus = "off"
-        protected set // Solo se puede cambiar desde la clase o sus subclases
+        protected set
 
     open val deviceType = "unknown"
 
@@ -17,13 +16,12 @@ open class SmartDevice(val name: String, val category: String) {
         deviceStatus = "off"
     }
 
-    // Método solicitado en el desafío
     fun printDeviceInfo() {
         println("Device name: $name, category: $category, type: $deviceType")
     }
 }
 
-// --- Subclases Específicas ---
+// --- Subclases Específicas (Sin cambios) ---
 class SmartTvDevice(name: String, category: String) : SmartDevice(name, category) {
 
     override val deviceType = "Smart TV"
@@ -42,7 +40,6 @@ class SmartTvDevice(name: String, category: String) : SmartDevice(name, category
             }
         }
 
-    // Método solicitado que verifica el estado del dispositivo
     fun decreaseVolume() {
         if (deviceStatus == "on") {
             speakerVolume--
@@ -52,7 +49,6 @@ class SmartTvDevice(name: String, category: String) : SmartDevice(name, category
         }
     }
 
-    // Método solicitado que verifica el estado del dispositivo
     fun previousChannel() {
         if (deviceStatus == "on") {
             channelNumber--
@@ -74,7 +70,6 @@ class SmartLightDevice(name: String, category: String) : SmartDevice(name, categ
             }
         }
 
-    // Método solicitado que verifica el estado del dispositivo
     fun decreaseBrightness() {
         if (deviceStatus == "on") {
             brightnessLevel--
@@ -85,15 +80,15 @@ class SmartLightDevice(name: String, category: String) : SmartDevice(name, categ
     }
 }
 
-// --- Clase Contenedora que gestiona los dispositivos ---
+// --- Clase Contenedora MODIFICADA ---
 class SmartHome(
     val smartTvDevice: SmartTvDevice,
     val smartLightDevice: SmartLightDevice
 ) {
-    // Propiedad solicitada para contar dispositivos encendidos
     var deviceTurnOnCount = 0
         private set
 
+    // --- Métodos de encendido y apagado (sin cambios) ---
     fun turnOnTv() {
         if(smartTvDevice.deviceStatus == "off"){
             deviceTurnOnCount++
@@ -124,5 +119,26 @@ class SmartHome(
             smartLightDevice.turnOff()
             println("${smartLightDevice.name} is now off.")
         }
+    }
+
+    // --- NUEVOS MÉTODOS AGREGADOS (Parte final del desafío) ---
+    fun decreaseTvVolume() {
+        smartTvDevice.decreaseVolume()
+    }
+
+    fun changeTvChannelToPrevious() {
+        smartTvDevice.previousChannel()
+    }
+
+    fun printSmartTvInfo() {
+        smartTvDevice.printDeviceInfo()
+    }
+
+    fun printSmartLightInfo() {
+        smartLightDevice.printDeviceInfo()
+    }
+
+    fun decreaseLightBrightness() {
+        smartLightDevice.decreaseBrightness()
     }
 }
